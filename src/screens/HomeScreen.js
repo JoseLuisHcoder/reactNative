@@ -12,7 +12,7 @@ import { colors, parameters } from '../global/styles'
 import { filterData, carsAround } from '../global/data'
 import { mapStyle } from '../global/mapStyle'
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
 
     const [latLng, setLatLng] = useState({})
 
@@ -68,9 +68,11 @@ const HomeScreen = () => {
             <View style={styles.view1}>
                 <View style={styles.view8}>
                     <Text style={styles.text2}>Read a book. Take a nap. Stare out the window</Text>
-                    <View style={styles.button1}>
-                            <Text style={styles.button1Text}>Ride with Uber</Text>
-                        </View>
+                    <TouchableOpacity onPress ={()=>{navigation.navigate("RequestScreen")}}>
+                                <View style ={styles.button1}>
+                                    <Text style = {styles.button1Text}>Ride with Uber</Text>
+                                </View>
+                    </TouchableOpacity>
                 </View>
                 <View>
                     <Image 
