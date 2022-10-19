@@ -24,8 +24,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
-    },
+      },
+      
+    "package":"com.uberclone",
+    "config" :{
+      "googleMaps":{
+        "apiKey":"AIzaSyCXSX5qCkxe1fvP_g01dLMoEFmh_ZgBOKc"
+      },
+      "permissions":["ACCESS_COARSE_LOCATION","ACCESS_FINE_LOCATION","FOREGROUND_SERVICE"]
+    }
+  },
     "web": {
       "favicon": "./assets/favicon.png"
     }

@@ -1,13 +1,28 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import { StyleSheet, Image,View,Text,Dimensions,TouchableOpacity} from 'react-native'
 import { colors, parameters } from '../global/styles'
 import { Avatar, Icon } from 'react-native-elements'
 import MapComponent from '../components/MapComponent'
+import { OriginContext } from '../contexts/contexts';
+import { useEffect } from 'react'
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-const RequestScreen = () => {
+export default function RequestScreen({navigation}) {
+
+  const {origin, dispatchOrigin} = useContext(OriginContext)
+  const [userOrigin, setUserOrigin] = useState({ latitude:origin.latitude,
+                                                 longitude:origin.longitude   
+                                               })
+
+  useEffect(() => {
+    setUserOrigin({ latitude:origin.latitude,
+               longitude:origin.longitude   
+             })
+  }, [origin])
+
+
   return (
     <View style={styles.container}>
       <View style={styles.view1}>
@@ -45,9 +60,11 @@ const RequestScreen = () => {
                 />
               </View>
               <View>
-                 <View style={styles.view6}>
-                    <Text style={styles.text1}>From where ?</Text>
-                 </View>
+                <TouchableOpacity onPress={()=>navigation.navigate("DestinationScreen")}>
+                  <View style={styles.view6}>
+                      <Text style={styles.text1}>From where ?</Text>
+                  </View>
+                </TouchableOpacity>
 
                  <View style={styles.view7}>
                 <TouchableOpacity>
@@ -69,12 +86,12 @@ const RequestScreen = () => {
              
           </View>
       </View>
-      <MapComponent />
+      <MapComponent userOrigin={userOrigin} />
     </View>
   )
 }
 
-export default RequestScreen
+
 
 const styles = StyleSheet.create({
   container1:{flex:1,

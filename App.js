@@ -2,12 +2,15 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import HomeScreen from './src/screens/HomeScreen'
 import RoootNavigator from './src/navigations/RootNavigator'
+import { OriginContextProvider } from './src/contexts/contexts'
 
 
 
 const App = () => {
   return (
-    <RoootNavigator />
+    <OriginContextProvider>
+       <RoootNavigator />
+    </OriginContextProvider>
   )
 }
 

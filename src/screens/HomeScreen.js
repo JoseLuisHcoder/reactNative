@@ -15,7 +15,8 @@ import { mapStyle } from '../global/mapStyle'
 const HomeScreen = ({navigation}) => {
 
     const [latLng, setLatLng] = useState({})
-
+    console.log(latLng);
+    
     const checkPermission = async()=>{
         const hasPermission = await Location.requestForegroundPermissionsAsync()
         if(hasPermission.status === "granted"){

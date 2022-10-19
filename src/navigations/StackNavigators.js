@@ -23,7 +23,7 @@ export function HomeStack(){
                 />
 
             <Home.Screen 
-                    name="Destination"
+                    name="DestinationScreen"
                     component={DestinationScreen}
                     options={{headerShown:false}}
                 />
