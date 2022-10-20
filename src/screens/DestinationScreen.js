@@ -5,7 +5,7 @@ import { Avatar,Icon} from 'react-native-elements';
 import { colors,parameters } from '../global/styles'
 import {GOOGLE_MAPS_APIKEY} from "@env";
 import config from '../../config'
-import { OriginContext } from '../contexts/contexts';
+import { OriginContext, DestinationContext } from '../contexts/contexts';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -13,13 +13,17 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 const DestinationScreen = ({navigation}) => {
 
     const {dispatchOrigin} = useContext(OriginContext)
-    // console.log("1", config.googleApi);
+    const {dispatchDestination} = useContext(DestinationContext)
+
+    // console.log("1", config.googlDestination
     const textInput1 = useRef(4);
     const textInput2 = useRef(5);
 
+    const [destination, setDestination] = useState(false)
+
   return (
     <>
-    <View style={styles.view2}>
+        <View style={styles.view2}>
             <View style={styles.view1}>
                     <Icon 
                     type="material-community"
@@ -48,10 +52,10 @@ const DestinationScreen = ({navigation}) => {
                             </View>
                     </View>
             </TouchableOpacity>
-    </View>
-        
-    <View style={{height:300}}>
-        {/* <GooglePlacesAutocomplete
+        </View>
+        { destination === false &&
+        <View style={{height:300}}>
+            {/* <GooglePlacesAutocomplete
             placeholder='para donde vamos'
             onPress={(data, details = null) => {
                 console.log(data, details);
@@ -63,40 +67,77 @@ const DestinationScreen = ({navigation}) => {
             }}
             currentLocation={false}
             
-        />    */}
+            />    */}
         
-         <GooglePlacesAutocomplete 
-                nearbyPlacesAPI = 'GooglePlacesSearch'
-                placeholder ="Going to..."
-                listViewDisplayed = "auto"
-                debounce ={400}
-                currentLocation ={false}
-                ref ={textInput1}
-                minLength ={2}
-                enablePoweredByContainer = {false}
-                fetchDetails ={true}
-                autoFocus ={true}
-                styles = {autoComplete}
-                query ={{
-                    key:config.googleApi,
-                    language:"en"
-                }}
-                onPress={(data, details = null)=>{
-                    dispatchOrigin({
-                        type:"ADD_ORIGIN",
-                        payload:{
-                            latitude:details.geometry.location.lat,
-                            longitude:details.geometry.location.lng,
-                            address:details.formatted_address,
-                            name:details.name
-                        }    
-                    })
-                    navigation.goBack()
-                }}
-                
-          />
+            <GooglePlacesAutocomplete 
+                    nearbyPlacesAPI = 'GooglePlacesSearch'
+                    placeholder ="From..."
+                    listViewDisplayed = "auto"
+                    debounce ={400}
+                    currentLocation ={false}
+                    ref ={textInput1}
+                    minLength ={2}
+                    enablePoweredByContainer = {false}
+                    fetchDetails ={true}
+                    autoFocus ={true}
+                    styles = {autoComplete}
+                    query ={{
+                        key:config.googleApi,
+                        language:"en"
+                    }}
+                    onPress={(data, details = null)=>{
+                        dispatchOrigin({
+                            type:"ADD_ORIGIN",
+                            payload:{
+                                latitude:details.geometry.location.lat,
+                                longitude:details.geometry.location.lng,
+                                address:details.formatted_address,
+                                name:details.name
+                            }    
+                        })
+                        setDestination(true)
+                    }}
+                    
+            />
 
-    </View>
+        </View>
+        }
+
+        {destination === true &&
+        <View style={{height:300}}>
+            <GooglePlacesAutocomplete 
+                    nearbyPlacesAPI = 'GooglePlacesSearch'
+                    placeholder ="Going to..."
+                    listViewDisplayed = "auto"
+                    debounce ={400}
+                    currentLocation ={false}
+                    ref ={textInput2}
+                    minLength ={2}
+                    enablePoweredByContainer = {false}
+                    fetchDetails ={true}
+                    autoFocus ={true}
+                    styles = {autoComplete}
+                    query ={{
+                        key:config.googleApi,
+                        language:"en"
+                    }}
+                    onPress={(data, details = null)=>{
+                        dispatchDestination({
+                            type:"ADD_DESTINATION",
+                            payload:{
+                                latitude:details.geometry.location.lat,
+                                longitude:details.geometry.location.lng,
+                                address:details.formatted_address,
+                                name:details.name
+                            }    
+                        })
+                        navigation.navigate("RequestScreen", {state:0})
+                    }}
+                    
+            />
+        </View>
+        }
+
     </>
   )
 }

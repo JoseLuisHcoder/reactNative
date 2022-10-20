@@ -3,7 +3,7 @@ import { StyleSheet, Image,View,Text,Dimensions,TouchableOpacity} from 'react-na
 import { colors, parameters } from '../global/styles'
 import { Avatar, Icon } from 'react-native-elements'
 import MapComponent from '../components/MapComponent'
-import { OriginContext } from '../contexts/contexts';
+import { OriginContext, DestinationContext } from '../contexts/contexts';
 import { useEffect } from 'react'
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -16,11 +16,19 @@ export default function RequestScreen({navigation}) {
                                                  longitude:origin.longitude   
                                                })
 
+  const {destination, dispatchDestination} = useContext(DestinationContext)
+  const [userDestination, setUserDestination] = useState({ latitude:destination.latitude,
+                                                           longitude:destination.longitude   
+                                                        })
+
   useEffect(() => {
     setUserOrigin({ latitude:origin.latitude,
-               longitude:origin.longitude   
+               longitude:origin.longitude }), 
+    
+    setUserDestination({ latitude:destination.latitude,
+                longitude:destination.longitude  
              })
-  }, [origin])
+  }, [origin, destination])
 
 
   return (
@@ -86,7 +94,7 @@ export default function RequestScreen({navigation}) {
              
           </View>
       </View>
-      <MapComponent userOrigin={userOrigin} />
+      <MapComponent userOrigin={userOrigin} userDestination={userDestination} />
     </View>
   )
 }

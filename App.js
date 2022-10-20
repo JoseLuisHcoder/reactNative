@@ -1,16 +1,18 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import HomeScreen from './src/screens/HomeScreen'
+import { DestinationContextProvider, OriginContextProvider } from './src/contexts/contexts'
 import RoootNavigator from './src/navigations/RootNavigator'
-import { OriginContextProvider } from './src/contexts/contexts'
 
 
 
 const App = () => {
   return (
-    <OriginContextProvider>
-       <RoootNavigator />
-    </OriginContextProvider>
+    <DestinationContextProvider>
+      <OriginContextProvider>
+        <RoootNavigator />
+      </OriginContextProvider>
+    </DestinationContextProvider>
   )
 }
 
